@@ -1,5 +1,5 @@
 <script setup>
-import Presupuesto from "./components/Presupuesto.vue";
+import Presupuesto from "./components/Presupuesto.vue"
 </script>
 
 <template>
