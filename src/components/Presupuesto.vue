@@ -4,6 +4,9 @@ import Alerta from './Alerta.vue';
 
 const presupuesto=ref(0)
 const error =ref('')
+
+const emits = defineEmits(('definir-presupuesto'))
+
 const definirPresupuesto=()=>{
     if(presupuesto.value<=0){
         error.value='Presupuesto no válido'
@@ -12,6 +15,7 @@ const definirPresupuesto=()=>{
             error.value=''
         },300);
     }
+    emits('definir-presupuesto',presupuesto.value)
 }
 </script>
 <template>
