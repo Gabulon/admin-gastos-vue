@@ -1,5 +1,16 @@
 <script setup>
 import imagen from'../assets/img/grafico.jpg'
+
+const props = defineProps({
+    presupuesto:{
+        type:Number,
+        required:true
+    },
+    disponible:{
+        type:Number,
+        required:true
+    }
+})
 </script>
 <template>
     <div class="dos-columnas">
@@ -14,11 +25,11 @@ import imagen from'../assets/img/grafico.jpg'
             </button>
             <p>
                 <span>Presupuesto:</span>
-                $0
+                ${{presupuesto}}
             </p>
             <p>
                 <span>Disponible:</span>
-                $0
+                ${{ disponible }}
             </p>
             <p>
                 <span>Gastado:</span>
