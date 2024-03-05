@@ -6,6 +6,18 @@ const props =defineProps({
     modal:{
         type:Object,
         required:true
+    },
+    nombre:{
+        type:String,
+        required:true,
+    },
+    cantidad:{
+        type:[String,number],
+        required:true,
+    },
+    categoria:{
+        type:String,
+        required:true,
     }
 })
 </script>
@@ -28,6 +40,7 @@ const props =defineProps({
                         type="text"
                         id="nombre"
                         placeholder="Añade el nombre del Gasto"
+                        :value="nombre"
                         />
 
                     </div>
@@ -37,12 +50,13 @@ const props =defineProps({
                         type="number"
                         id="cantidad"
                         placeholder="Añade la cantidad de gasto, ej.300"
+                        :value="cantidad"
                         />
 
                     </div>
                     <div class="campo">
                         <label for="categoria">Categoria</label>
-                        <select id="categoria">
+                        <select id="categoria" :value="categoria">
                             <option value="">-- Seleccione --</option>
                             <option value="ahorro">Ahorro</option>
                             <option value="comida">Comida</option>
