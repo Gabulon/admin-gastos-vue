@@ -9,5 +9,7 @@
     </div>
 </template>
 <style lang="scss" scoped>
-
+h2 {
+    color: blue;
+}
 </style>
