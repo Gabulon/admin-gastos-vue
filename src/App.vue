@@ -1,52 +1,62 @@
 <script setup>
-import {ref,reactive} from 'vue'
+import { ref, reactive } from "vue";
 import Presupuesto from "./components/Presupuesto.vue";
-import ControlPresupuesto from './components/ControlPresupuesto.vue'
-import iconoNuevoGasto from './assets/img/nuevo-gasto.svg'
-import Modal from './components/Modal.vue'
-import { generarId } from './helpers';
+import ControlPresupuesto from "./components/ControlPresupuesto.vue";
+import iconoNuevoGasto from "./assets/img/nuevo-gasto.svg";
+import Modal from "./components/Modal.vue";
+import { generarId } from "./helpers";
 
-const modal= reactive({
-  mostrar:false,
-  animar:false
-})
-const presupuesto=ref(0)
-const disponible=ref(0)
+const modal = reactive({
+  mostrar: false,
+  animar: false,
+});
+const presupuesto = ref(0);
+const disponible = ref(0);
 
-const gasto= reactive({
-  nombre:'',
-  cantidad:'',
-  categoria:'',
-  id:null,
-  fecha:Date.now()
-})
+const gasto = reactive({
+  nombre: "",
+  cantidad: "",
+  categoria: "",
+  id: null,
+  fecha: Date.now(),
+});
 
-const gastos =ref([])
-const definirPresupuesto =(cantidad) =>{
-  presupuesto.value =cantidad
-  disponible.value=cantidad
-}
-const mostrarModal = ()=>{
-  modal.mostrar=true
-  setTimeout(()=>{
-    modal.animar=true
-  },300);
- 
-}
+const gastos = ref([]);
+const definirPresupuesto = (cantidad) => {
+  presupuesto.value = cantidad;
+  disponible.value = cantidad;
+};
+const mostrarModal = () => {
+  modal.mostrar = true;
+  setTimeout(() => {
+    modal.animar = true;
+  }, 300);
+};
 
-const ocultarModal = ()=>{
-  setTimeout(()=>{
-    modal.mostrar=false
-  },300);
-  modal.animar=false
-}
+const ocultarModal = () => {
+  setTimeout(() => {
+    modal.mostrar = false;
+  }, 300);
+  modal.animar = false;
+};
 
-const guardarGasto = () =>{
+const guardarGasto = () => {
   gastos.value.push({
     ...gasto,
-    id:generarId()
-  })
-} 
+    id: generarId(),
+  });
+
+  ocultarModal();
+
+  //reinciiar el objeto
+  Object.assign(gasto, {
+    nombre: "",
+    cantidad: "",
+    categoria: "",
+    id: null,
+    fecha: Date.now(),
+  });
+};
 </script>
 
 <template>
@@ -54,35 +64,34 @@ const guardarGasto = () =>{
     <header>
       <h1>Planificador de Gastos</h1>
       <div class="contenedor-header contendor sombra">
-        <Presupuesto 
-        v-if="presupuesto === 0"
-        @definir-presupuesto="definirPresupuesto"
+        <Presupuesto
+          v-if="presupuesto === 0"
+          @definir-presupuesto="definirPresupuesto"
         />
         <ControlPresupuesto
-        v-else
-        :presupuesto="presupuesto"
-        :disponible="disponible"
+          v-else
+          :presupuesto="presupuesto"
+          :disponible="disponible"
         />
       </div>
     </header>
     <main v-if="presupuesto > 0">
       <div class="crear-gasto">
-          <img 
+        <img
           :src="iconoNuevoGasto"
           alt="icono nuevo gasto"
           @click="mostrarModal"
-          />
-         Nuevo Gasto
+        />
+        Nuevo Gasto
       </div>
       <Modal
-      v-if="modal.mostrar"
-      @ocultar-modal="ocultarModal"
-      @guardar-gasto="guardarGasto" 
-      :modal="modal"
-      v-model:nombre="gasto.nombre"
-      v-model:cantidad="gasto.cantidad"
-      v-model:categoria="gasto.categoria"
-
+        v-if="modal.mostrar"
+        @ocultar-modal="ocultarModal"
+        @guardar-gasto="guardarGasto"
+        :modal="modal"
+        v-model:nombre="gasto.nombre"
+        v-model:cantidad="gasto.cantidad"
+        v-model:categoria="gasto.categoria"
       />
     </main>
   </div>
@@ -126,33 +135,32 @@ header h1 {
   color: var(--blanco);
   text-align: center;
 }
-.contendor{
-    width: 90%;
-    max-width: 80rem;
-    margin: 0 auto;
+.contendor {
+  width: 90%;
+  max-width: 80rem;
+  margin: 0 auto;
 }
-.contenedor-header{
-    margin-top: -5rem;
-    transform: translateY(5rem);
-    padding: 5rem;
+.contenedor-header {
+  margin-top: -5rem;
+  transform: translateY(5rem);
+  padding: 5rem;
 }
-.sombra{
-box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
-background-color: var(--blanco);
-border-radius: 1.2rem;
-padding: 5rem;
+.sombra {
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  background-color: var(--blanco);
+  border-radius: 1.2rem;
+  padding: 5rem;
 }
-.crear-gasto{
+.crear-gasto {
   position: fixed;
   bottom: 5rem;
   right: 5rem;
 }
-.crear-gasto img{
+.crear-gasto img {
   width: 5 rem;
   cursor: pointer;
 }
-.crear-gasto img:hover{
+.crear-gasto img:hover {
   cursor: pointer;
 }
-
 </style>
