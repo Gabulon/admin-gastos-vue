@@ -10,7 +10,6 @@ const modal= reactive({
   animar:false
 })
 const presupuesto=ref(0)
-
 const disponible=ref(0)
 
 const gasto= reactive({
@@ -20,6 +19,8 @@ const gasto= reactive({
   id:null,
   fecha:Date.now()
 })
+
+const gastos =ref([])
 const definirPresupuesto =(cantidad) =>{
   presupuesto.value =cantidad
   disponible.value=cantidad
@@ -40,7 +41,10 @@ const ocultarModal = ()=>{
 }
 
 const guardarGasto = () =>{
-
+  gastos.value.push({
+    ...gasto,
+    id:123,
+  })
 } 
 </script>
 
