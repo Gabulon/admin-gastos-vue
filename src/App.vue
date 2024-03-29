@@ -34,6 +34,23 @@ watch(gastos, () => {
   deep:true
 })
 
+watch(modal, () =>{
+  if(!modal.mostrar){
+    reinciarStateGasto();
+  }
+},{
+  deep:true
+})
+const reinciarStateGasto = () => {
+  Object.assign(gasto, {
+    nombre: "",
+    cantidad: "",
+    categoria: "",
+    id: null,
+    fecha: Date.now(),
+  })
+}
+
 const definirPresupuesto = (cantidad) => {
   presupuesto.value = cantidad;
   disponible.value = cantidad;
@@ -61,13 +78,7 @@ const guardarGasto = () => {
   ocultarModal();
 
   //reinciiar el objeto
-  Object.assign(gasto, {
-    nombre: "",
-    cantidad: "",
-    categoria: "",
-    id: null,
-    fecha: Date.now(),
-  });
+  reinciarStateGasto();
 }
 
 const seleccionarGasto = id =>{
