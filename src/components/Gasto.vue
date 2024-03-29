@@ -24,66 +24,69 @@ const props = defineProps({
     required: true,
   },
 });
+defineEmits(["seleccionar-gasto"]);
 </script>
 <template>
   <div class="gasto sombta">
     <div class="contenido">
-      <img 
-      :src="diccionarioIconos[gasto.categoria]" 
-      alt="Icono gasto" 
-      class="icono" />
-      <p class="categoria">{{ gasto.categoria }}</p>
-      <p class="nombre">{{ gasto.nombre }}</p>
-      <p class="fecha">
-        Fecha:
-        <span>{{ formatearFecha(gasto.fecha) }}</span>
-    </p>
+      <img
+        :src="diccionarioIconos[gasto.categoria]"
+        alt="Icono gasto"
+        class="icono"
+      />
+      <div class="detalles">
+        <p class="categoria" @click="$emit('seleccionar-gasto',gasto.id)">{{ gasto.categoria }}</p>
+        <p class="nombre">{{ gasto.nombre }}</p>
+        <p class="fecha">
+          Fecha:
+          <span>{{ formatearFecha(gasto.fecha) }}</span>
+        </p>
+      </div>
     </div>
     <p class="cantidad">{{ formatearCantidad(gasto.cantidad) }}</p>
   </div>
 </template>
 <style scoped>
 .gasto {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 }
-.contenido{
-    display: flex;
-    align-items: center;
-    gap: 2rem;
+.contenido {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 .icono {
-    width: 5rem;
+  width: 5rem;
 }
-.detalles p{
-    margin: 0 0 1rem 0;
+.detalles p {
+  margin: 0 0 1rem 0;
 }
 .categoria {
-    color: var(--gris);
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    font-weight: 900;
+  color: var(--gris);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  font-weight: 900;
 }
 .nombre {
-    color: var(--gris-oscuro);
-    font-size: 2.4rem;
-    font-weight: 700;
-    cursor: pointer;
+  color: var(--gris-oscuro);
+  font-size: 2.4rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 .fecha {
- color: var(--gris-oscuro);
- font-size: 1.6rem;
- font-weight: 900;
-
+  color: var(--gris-oscuro);
+  font-size: 1.6rem;
+  font-weight: 900;
 }
-.fecha span{
-    font-weight: 400;
+.fecha span {
+  font-weight: 400;
 }
 .cantidad {
-    font-size: 3rem;
-    font-weight: 900;
-    margin: 0;
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0;
 }
 </style>
