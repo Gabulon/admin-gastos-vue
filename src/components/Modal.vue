@@ -11,6 +11,8 @@ const emit = defineEmits([
   "update:nombre",
   "update:cantidad",
   "update:categoria",
+  "eliminar-gasto"
+  
 ]);
 const props = defineProps({
   modal: {
@@ -134,6 +136,7 @@ const agregarGasto = () => {
       <button 
       type="button"
       class="btn-eliminar"
+      @click="$emit('eliminar-gasto')"
       v-if="id "
       >Eliminar Gasto</button>
     </div>
