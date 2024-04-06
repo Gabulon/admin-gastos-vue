@@ -65,6 +65,10 @@ onMounted(()=>{
     presupuesto.value=Number(presupuestoStorage)
     disponible.value=Number(presupuestoStorage)
   }
+  const gastosStorage = localStorage.getItem('gastos')
+  if(gastosStorage){
+    gastos.value=JSON.parse(gastosStorage)
+  }
 })
 const reinciarStateGasto = () => {
   Object.assign(gasto, {
@@ -129,6 +133,13 @@ const gastosFiltrados = computed(() => {
   }
   return gastos.value;
 });
+const resetApp = () =>{
+  if(confirm('¿Deseas Reiniciar presupuesto y gastos ?')){
+    gastos.value=[]
+    presupuesto.value=0
+  }
+
+}
 </script>
 
 <template>
@@ -145,6 +156,7 @@ const gastosFiltrados = computed(() => {
           :presupuesto="presupuesto"
           :disponible="disponible"
           :gastado="gastado"
+          @reset-app="resetApp"
         />
       </div>
     </header>
