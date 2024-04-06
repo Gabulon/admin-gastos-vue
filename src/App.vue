@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, computed } from "vue";
 import Presupuesto from "./components/Presupuesto.vue";
 import ControlPresupuesto from "./components/ControlPresupuesto.vue";
 import Modal from "./components/Modal.vue";
@@ -8,7 +8,6 @@ import Filtros from "./components/Filtros.vue";
 import { generarId } from "./helpers";
 import iconoNuevoGasto from "./assets/img/nuevo-gasto.svg";
 
-
 const modal = reactive({
   mostrar: false,
   animar: false,
@@ -16,7 +15,7 @@ const modal = reactive({
 const presupuesto = ref(0);
 const disponible = ref(0);
 const gastado = ref(0);
-const filtro =ref('');
+const filtro = ref("");
 
 const gasto = reactive({
   nombre: "",
@@ -111,6 +110,12 @@ const eliminarGasto = () => {
     ocultarModal();
   }
 };
+const gastosFiltrados = computed(() => {
+  if (filtro.value) {
+    return gastos.value.filter((gastro) => gasto.categoria === filtro.value);
+  }
+  return gastos.value;
+});
 </script>
 
 <template>
@@ -131,13 +136,12 @@ const eliminarGasto = () => {
       </div>
     </header>
     <main v-if="presupuesto > 0">
-      <Filtros
-      v-model:filtro="filtro"
-      />
+      <Filtros v-model:filtro="filtro" />
       <div class="listado-gastos contenedor">
         <h2>{{ gastos.length > 0 ? "Gastos" : "No hay Gastos" }}</h2>
+
         <Gasto
-          v-for="gasto in gastos"
+          v-for="gasto in gastosFiltrados"
           :key="gasto.id"
           :gasto="gasto"
           @seleccionar-gasto="seleccionarGasto"
